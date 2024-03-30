@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hestia Hotels - Sign Up</title>
+    <link href= "/public/assets/styles.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <header>
+        <nav>
+            <img src="HotelPixelArt.png" style="width:50px;height:50px;float: left;">
+            <h1 class="nav-heading"><a href="index.html">Hestia Hotels</a></h1>
+        </nav>
+    </header>
+
+    <h1>Sign Up</h1>
+    <hr>
+
+    <form class="login-form" action="signup" method="post">
+        <div class="form-group">
+            <label for="firstname">First Name:</label>
+            <input type="text" id="firstname" name="firstname" required>
+        </div> 
+        <div class="form-group">
+            <label for="lastname">Last Name:</label>
+            <input type="text" id="lastname" name="lastname" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="text" id="password" name="password" required>
+        </div>
+        <div class="form-group">
+            <label for="streetname">Street Name:</label>
+            <input type="text" id="streetname" name="streetname" required>
+        </div>
+        <div class="form-group">
+            <label for="streetnumber">Street Number:</label>
+            <input type="text" id="streetnumber" name="streetnumber" required>
+        </div>
+        <div class="form-group">
+            <label for="postcode">Postal Code:</label>
+            <input type="text" id="postcode" name="postcode" required>
+        </div>
+        <div class="form-group">
+            <label for="city">City:</label>
+            <input type="text" id="city" name="city" required>
+        </div>
+
+        <div class="form-group">
+            <label for="nas">NAS</label>
+            <input type="text" id="nas" name="nas" required>
+        </div>
+        <button type="submit" class="button">Sign Up</button>
+    </form>
+
+</body>
+</html>

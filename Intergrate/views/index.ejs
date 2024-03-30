@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hestia Hotels</title>
+    <link href= "/public/assets/styles.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <header>
+        <nav>
+            <img src="HotelPixelArt.png" style="width:50px;height:50px;float: left;">
+            <h1 class="nav-heading"><a href="index.html">Hestia Hotels</a></h1>
+        </nav>
+    </header>
+
+    <h1>Bienvenue</h1>
+    <hr>
+    <h2 class="h2-intro">Choisissez votre méthode de connexion</h2>
+
+    <div class="button-container">
+        <button class="button" onclick="clientButtonClick()">Client</button>
+        <button class="button" onclick="adminButtonClick()">Admin</button>
+    </div>
+    
+    <script>
+    function clientButtonClick(){
+        window.location.href = '/client';
+    }
+
+    function adminButtonClick(){
+        window.location.href = '/admin';
+    }
+    </script>
+
+</body>
+</html>
