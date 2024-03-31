@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hestia Hotels - Log In</title>
     <link href= "/public/assets/styles.css" rel="stylesheet" type="text/css" />
+    <style>
+        .error-message{
+            color: red;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -17,6 +22,8 @@
     <h1>Log In</h1>
     <hr>
 
+    
+
     <form class="login-form" action="login" method="post">
         <div class="form-group">
             <label for="nas">NAS:</label>
@@ -26,6 +33,11 @@
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
         </div>
+        <% if (errorMessage) { %>
+            <div class="error-message">
+                <%= errorMessage %>
+            </div>
+        <% } %>
         <button type="submit" class="button">Log In</button>
     </form>
 

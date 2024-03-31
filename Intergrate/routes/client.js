@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
 
 router.route('/login')
 .get((req,res) =>{
-    res.render('login')
+    res.render('login',{errorMessage :''})
 })
 
 .post((req,res) =>{
@@ -33,7 +33,7 @@ router.route('/login')
         values: [NAS, password]
     };
 
-    client.query(query,(err, result)=> {
+    client.query(query,(err, result) => {
         if (err){
             console.error('Error', err.message);
             res.status(500).send('Internal Server Error');
@@ -43,81 +43,70 @@ router.route('/login')
         if(result.rows.length > 0){
             res.redirect(`/client/${NAS}`);
         } else{
-            res.render('login');
+            res.render('login', {errorMessage: '**NAS ou mot de passe invalid**'});
         }
     })  
 })
 
 router.route('/signup')
-.get((req,res) =>{
-    res.render('signup')
-})
+    .get((req, res) => {
+        res.render('signup', { errorMessage: '' }); 
+    })
+    .post((req, res, next) => {
+        const first = req.body.firstname;
+        const last = req.body.lastname;
+        const NAS = req.body.nas;
+        const pass = req.body.password;
+        const streetname = req.body.streetname;
+        const streetnumber = req.body.streetnumber;
+        const postcode = req.body.postcode;
+        const ville = req.body.city;
 
-.post((req, res,next) =>{
-    const first = req.body.firstname;
-    const last = req.body.lastname;
-    const NAS = req.body.nas;
-    const pass = req.body.password;
-    const streetname = req.body.streetname;
-    const streetnumber = req.body.streetnumber;
-    const postcode = req.body.postcode;
-    const ville = req.body.city;
+        const currentDate = new Date();
+        const year = currentDate.getFullYear();
+        const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+        const day = String(currentDate.getDate()).padStart(2, '0');
+        const formattedDate = `${year}-${month}-${day}`;
 
-    const currentDate = new Date();
-    const year = currentDate.getFullYear();
-    const month = String(currentDate.getMonth() + 1).padStart(2, '0'); 
-    const day = String(currentDate.getDate()).padStart(2, '0'); 
-    const formattedDate = `${year}-${month}-${day}`;
-
-    console.log(postcode);
-
-    client.query(`SELECT COUNT(*) AS count FROM Personne`)
-
-    client.query('INSERT INTO adresse(code_postal, rue, num_de_rue, ville) VALUES ($1, $2, $3, $4)', [postcode, streetname, streetnumber, ville], (err, result) => {
-        if (err) {
-            if (err.message = "value too long for type character varying(7)"){
-                console.error('Error inserting data into adresse:', err.message);
-                res.status(500).send('you did not enter a valid postal code');
-                
-            } else{
-            console.error('Error inserting data into adresse:', err.message);
-            res.status(500).send('The NAS AND/OR Postal code inserted has already been registered');}
-            return;
-        }
-
-        console.log('Data inserted successfully into adresse');
-
-        client.query('INSERT INTO Personne(nas, nom, prenom, code_postal) VALUES($1,$2,$3,$4)', [NAS, last, first, postcode], (err, result) => {
+        client.query('INSERT INTO adresse(code_postal, rue, num_de_rue, ville) VALUES ($1, $2, $3, $4)', [postcode, streetname, streetnumber, ville], (err, result) => {
             if (err) {
-                console.error('Error inserting data into Personne:', err.message);
-                res.status(500).send('Could not insert');
-                return;
-            }
-
-            console.log('Data inserted successfully into Personne');
-
-            client.query('INSERT INTO client(nas, mot_de_passe, date_enreg) VALUES($1,$2,$3)', [NAS, pass, formattedDate], (err, result) => {
-                if (err) {
-                    console.error('Error inserting data into client:', err.message);
-                    res.status(500).send('Error inserting data into client');
-                    return;
+                if (err.message === 'new row for relation "adresse" violates check constraint "len_post_check"') {
+                    res.render('signup', { errorMessage: 'Vous avez soumis un code postal non-valide' });
+                } else {
+                    next(err);
                 }
-
-                console.log('Data inserted successfully into client');
-                res.redirect(`/client/${NAS}`);
-                // Send response after completing all database operations
-                
-            });
+            } else {
+                client.query('INSERT INTO personne(nas, nom, prenom, code_postal) VALUES($1,$2,$3,$4)', [NAS, last, first, postcode], (err, result) =>{
+                    if (err){
+                        if(err.message === 'duplicate key value violates unique constraint "personne_pkey"'){
+                            client.query(`DELETE FROM adresse WHERE code_postal = '${postcode}'`)
+                            res.render('signup', { errorMessage: 'Vous avez utiliser un NAS deja inscrit'});
+                        } else{
+                            next(err);
+                        }
+                    } else{
+                        client.query('INSERT INTO client(nas, mot_de_passe, date_enreg) VALUES($1,$2,$3)', [NAS, pass, formattedDate], (err, result) =>{
+                            if (err) {
+                                console.error('Error inserting data into client:', err.message);
+                                res.status(500).send('Error inserting data into client');
+                                return;
+                            }
+            
+                            console.log('Data inserted successfully into client');
+                            res.redirect(`/client/${NAS}`); 
+                        })
+                    }
+                })
+            }
         });
-    });
-})
+ });
 
 router.get('/:id', (req,res) =>{
     const userid = req.params.id;
     res.render('loggedin', {id: userid});
 })
 
-router.route(`/:id/reservation`)
+router.route(`/:id/ressearch`)
 .get(async (req,res) =>{
     const userid = req.params.id;
     try {
@@ -139,14 +128,14 @@ router.route(`/:id/reservation`)
         nchambres.push('No preferance')
         
 
-        res.render(`reservation`, {id: userid,villes: villes, hotels: hotels, superficie: superficie, nchambres: nchambres});
+        res.render(`ressearch`, {id: userid,villes: villes, hotels: hotels, superficie: superficie, nchambres: nchambres});
     } catch (error) {
         console.error('Error executing query:', error.message);
         res.status(500).send('Internal Server Error');
     }
-    res.render(`reservation`, {id: userid});
+    res.render(`ressearch`, {id: userid});
 })
-.post((req, res, next)=> {
+.post((req, res)=> {
     const hotelchoice = req.body.chaine_hotel;
     const villechoice = req.body.ville;
     const startdate = req.body.startdate;
@@ -158,22 +147,126 @@ router.route(`/:id/reservation`)
     const minprice = req.body.minprice;
     const maxprice = req.body.maxprice;
 
-    /*
-    SELECT chambres_id, prix, commodites, capacite, superficie, particularite, classement, rue, num_de_rue, ville
-    FROM Chambres C
-    INNER JOIN Hotel H ON C.H_ID = H.H_ID
-    INNER JOIN adresse A ON A.code_postal = H.code_postal
-    INNER JOIN Chaine_hoteliere CH ON H.CH_ID = CH.CH_ID
-    INNER JOIN reservation R ON R.chambres_id = C.chambres_id
-    WHERE CH.Nom = ''
-    WHERE CH.capacite = ''
-    WHERE CH.superficie = ''
-    WHERE H.nombrs_chambres = ''
-    WHERE prix BETWEEN min AND max*/
-;
+    let query = 'SELECT chambres_id, prix, commodites, capacite, superficie, particularite, classement, rue, num_de_rue, ville\
+    FROM Chambres C\
+    INNER JOIN Hotel H ON C.H_ID = H.H_ID\
+    INNER JOIN adresse A ON A.code_postal = H.code_postal\
+    INNER JOIN Chaine_hoteliere CH ON H.CH_ID = CH.CH_ID\
+    WHERE ';
 
+    query += `C.prix BETWEEN '${minprice}' AND  '${maxprice}'`;
+   
+    if(hotelchoice !== "No preferance"){
+        query += ` AND CH.nom = '${hotelchoice}'`; 
+    }
+
+    if(villechoice !== "No preferance"){
+        query += ` AND A.ville = '${villechoice}'`; 
+    }
+
+    if(capacite !== "No preferance"){
+        query += ` AND C.capacite = '${capacite}'`; 
+    }
+
+    if(categorie !== "No preferance"){
+        query += ` AND H.classement = '${categorie}'`; 
+    }
+
+    if(superficie !== "No preferance"){
+        query += ` AND C.superficie = '${superficie}'`; 
+    }
+
+    if(nchambres !== "No preferance"){
+        query += ` AND H.nombre_chambres = '${nchambres}'`; 
+    }
+
+    query += ` AND C.chambres_id NOT IN (
+        SELECT R.Chambres_ID
+        FROM Reservation R
+        WHERE R.Date_de_début <= '${enddate}' AND R.Date_de_fin >= '${startdate}'
+    )`;
+
+    console.log(query)
+    client.query(query)
+    .then(result => {
+        const rows = result.rows;
+        res.render('resresults',{rows: rows,startdate: startdate, enddate: enddate})
+    })
+    .catch(error => {
+        console.error('Error executing query:', error.message);
+        res.status(500).send(error.message);
+    });
+});
+
+router.route('/:id/resresults')
+.get((req,res) => {
+    res.send('hi')
+})
+.post(async (req,res)=>{
+    const id = req.params.id
+    const chambre_id = req.body.chambres_id
+    const startdate = req.body.startdate
+    const enddate = req.body.enddate
+
+    try {
+        await client.query(`INSERT INTO reservation (chambres_id, nas, date_de_début, date_de_fin) VALUES ('${chambre_id}', '${id}', '${startdate}', '${enddate}')`);
+        
+        res.redirect(`yourreservation`);
+    } catch (error) {
+        console.error('Error executing INSERT query:', error.message);
+        res.status(500).send('Internal Server Error');
+    }
+    
+    
+})
+
+router.route('/:id/yourreservation')
+.get((req,res)=>{
+    const id = req.params.id
+    client.query(`SELECT chambres_id, date_de_début, date_de_fin FROM reservation R WHERE R.nas = '${id}'`)
+    .then(result => {
+        const rows = result.rows;
+        res.render('yourreservation',{rows: rows})
+    })
+})
+
+router.post('/:id/cancelRes',(req,res) =>{
+    const id = req.params.id
+    const chambre_id = req.body.chambres_id
+    const startdate = new Date(req.body.startdate).toISOString().substring(0, 10); // Format start date
+    const enddate = new Date(req.body.enddate).toISOString().substring(0, 10); // Format end date
+
+    const currentDate = new Date();
+    const startdateObj = new Date(startdate);
+    if (currentDate >= startdateObj) {
+        return res.status(400).send("Cannot cancel reservation")
+    } 
+    else{
+        client.query(`DELETE FROM reservation R WHERE R.nas = '${id}' AND R.chambres_id = '${chambre_id}' AND R.date_de_début = '${startdate}' AND R.date_de_fin = '${enddate}' `,(err, result) =>{
+            if(err){
+                console.log(`DELETE FROM reservation R WHERE R.nas = ${id} AND R.chambres_id = '${chambre_id}' AND R.date_de_début = '${startdate}' AND R.date_de_fin = '${enddate}' `)
+                return res.status(400).send("Cannot cancel reservation for unexplicable reasons")
+            }
+            else{
+                client.query(`SELECT chambres_id, date_de_début, date_de_fin FROM reservation R WHERE R.nas = '${id}'`)
+                .then(result => {
+                const rows = result.rows;
+                res.render('yourreservation',{rows: rows})
+    })
+            }
+        })
+    }
+        
 })
 
 
 
+
+
+
+
+
+
+    
+    
 module.exports = router;

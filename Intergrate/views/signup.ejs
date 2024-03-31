@@ -4,7 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hestia Hotels - Sign Up</title>
-    <link href= "/public/assets/styles.css" rel="stylesheet" type="text/css" />
+    <link href="/public/assets/styles.css" rel="stylesheet" type="text/css" />
+    <style>
+        .error-message{
+            color: red;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -16,6 +21,12 @@
 
     <h1>Sign Up</h1>
     <hr>
+
+    <% if (errorMessage) { %>
+        <div class="error-message">
+            <%= errorMessage %>
+        </div>
+    <% } %>
 
     <form class="login-form" action="signup" method="post">
         <div class="form-group">

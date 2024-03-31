@@ -16,9 +16,8 @@
 
     <h1>Page de reservation</h1>
     <hr>
-    <h2 class="h2-intro">Metez vos criteres</h2>
+    <h2 class="h2-intro">Metez vos critères voulues</h2>
 
-    
     <% const hoteloptions = hotels; %>    
     <% const villeoptions = villes; %>
     <% const superficieoptions = superficie; %>
@@ -26,7 +25,7 @@
     <% const capaciteoptions = ['1','2','3','4','5', 'No preferance']; %>
     <% const categorieoptions = ['5','4','3','2', 'No preferance']; %>
     
-    <form action="reservation" method ="post">
+    <form action="ressearch" method ="post">
         <label for="dropdown">Sélectionner votre hôtel de choix:</label>
         <select id="chaine_hotel" name="chaine_hotel">
             <% hoteloptions.forEach(option => { %>
@@ -55,6 +54,7 @@
                 <option value="<%= option %>"><%= option %></option>
             <% }); %>            
         </select>
+
         <br>
 
         <label for="dropdown">Catégorie?</label>  
@@ -63,6 +63,7 @@
                 <option value="<%= option %>"><%= option %></option>
             <% }); %>            
         </select>
+
         <br>
 
         <label for="dropdown">Superficie?</label>  
@@ -71,6 +72,7 @@
                 <option value="<%= option %>"><%= option %></option>
             <% }); %>            
         </select>
+
         <br>
 
         <label for="dropdown">Le nombre de chambres dans l'hôtel?</label>  
@@ -79,6 +81,7 @@
                 <option value="<%= option %>"><%= option %></option>
             <% }); %>            
         </select>
+
         <br>
 
         <label for="dateInput">De combin à combien voulez-vous dépenser?:</label>
@@ -86,6 +89,7 @@
         <input type="text" id="maxprice" name="maxprice">
         
         <br>
+        
         <input type="submit" value="Submit">
     </form>
 
