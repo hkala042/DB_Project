@@ -117,23 +117,63 @@ router.get('/:id', (req,res) =>{
     res.render('loggedin', {id: userid});
 })
 
-router.get('/:id/reservation', async (req,res,next) =>{
+router.route(`/:id/reservation`)
+.get(async (req,res) =>{
     const userid = req.params.id;
     try {
         const villeresult = await client.query('SELECT DISTINCT ville FROM adresse, hotel where adresse.code_postal = hotel.code_postal');
         const villes = villeresult.rows.map(row => row.ville);
+        villes.push('No preferance')
 
         const hotelresult = await client.query('SELECT DISTINCT nom FROM chaine_hoteliere');
         const hotels = hotelresult.rows.map(row => row.nom);
+        hotels.push('No preferance')
 
-        res.render(`reservation`, {id: userid,villes: villes, hotels: hotels});
+        const superficieresult = await client.query('SELECT DISTINCT superficie from chambres')
+        const superficie = superficieresult.rows.map(row => row.superficie);
+        
+        superficie.push('No preferance')
+
+        const nchambresresult = await client.query('SELECT DISTINCT nombre_chambres FROM hotel')
+        const nchambres = nchambresresult.rows.map(row => row.nombre_chambres);
+        nchambres.push('No preferance')
+        
+
+        res.render(`reservation`, {id: userid,villes: villes, hotels: hotels, superficie: superficie, nchambres: nchambres});
     } catch (error) {
         console.error('Error executing query:', error.message);
         res.status(500).send('Internal Server Error');
     }
-
-    
     res.render(`reservation`, {id: userid});
 })
+.post((req, res, next)=> {
+    const hotelchoice = req.body.chaine_hotel;
+    const villechoice = req.body.ville;
+    const startdate = req.body.startdate;
+    const enddate = req.body.enddate;
+    const capacite = req.body.capacite;
+    const categorie = req.body.categorie;
+    const superficie = req.body.superficie;
+    const nchambres = req.body.nchambres;
+    const minprice = req.body.minprice;
+    const maxprice = req.body.maxprice;
+
+    /*
+    SELECT chambres_id, prix, commodites, capacite, superficie, particularite, classement, rue, num_de_rue, ville
+    FROM Chambres C
+    INNER JOIN Hotel H ON C.H_ID = H.H_ID
+    INNER JOIN adresse A ON A.code_postal = H.code_postal
+    INNER JOIN Chaine_hoteliere CH ON H.CH_ID = CH.CH_ID
+    INNER JOIN reservation R ON R.chambres_id = C.chambres_id
+    WHERE CH.Nom = ''
+    WHERE CH.capacite = ''
+    WHERE CH.superficie = ''
+    WHERE H.nombrs_chambres = ''
+    WHERE prix BETWEEN min AND max*/
+;
+
+})
+
+
 
 module.exports = router;
