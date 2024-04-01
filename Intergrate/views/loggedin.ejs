@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hestia Hotels</title>
     <link href= "/public/assets/styles.css" rel="stylesheet" type="text/css" />
+    <style>
+        .error-message{
+            color: red;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -23,6 +29,14 @@
         <a href="/"><button class="button">Log Out</button></a>
         <a href="<%=id%>/yourreservation"><button class="button">Voire vos reservations</button></a>
     </div>
+
+    <% if (errorMessage) { %>
+        <div class="error-message">
+            <%= errorMessage %>
+        </div>
+    <% } %>
+
+    
 
 </body>
 </html>

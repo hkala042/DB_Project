@@ -103,7 +103,7 @@ router.route('/signup')
 
 router.get('/:id', (req,res) =>{
     const userid = req.params.id;
-    res.render('loggedin', {id: userid});
+    res.render('loggedin', { id: userid, errorMessage: '' });
 })
 
 router.route(`/:id/ressearch`)
@@ -225,10 +225,18 @@ router.route('/:id/yourreservation')
     const id = req.params.id
     client.query(`SELECT chambres_id, date_de_début, date_de_fin FROM reservation R WHERE R.nas = '${id}'`)
     .then(result => {
-        const rows = result.rows;
+        const rows = result.rows
         res.render('yourreservation',{rows: rows})
-    })
-})
+        }         
+ )})
+
+ .post((req,res)=>{
+    const id = req.params.id
+    res.redirect(`/client/${id}`)
+ })
+
+
+
 
 router.post('/:id/cancelRes',(req,res) =>{
     const id = req.params.id
@@ -259,14 +267,5 @@ router.post('/:id/cancelRes',(req,res) =>{
         
 })
 
-
-
-
-
-
-
-
-
-    
     
 module.exports = router;
