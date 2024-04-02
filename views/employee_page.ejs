@@ -4,15 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employee Home page</title>
+    <link href= "/public/assets/styles.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
+    <h1>Bonjour empl <%=empid%></h1>
+    
     <form action="/api/employee/all_res" method="GET">
         <button class="emp-btn" type="submit"> Voir toutes les réservations </button>
+    </form>
+
+    <form action="/api/employee/search_res" method="GET">
+        <button class="emp-btn" type="submit"> Rechercher une réservation </button>
     </form>
 
     <form action="/api/employee/new_res" method="GET">
         <button class="emp-btn" type="submit"> Enregistrer une nouvelle réservation </button>
     </form>
+
+    <form action="/api/employee/mod_res" method="GET">
+        <input class="emp-btn" type="text" name="res_id" id="res_id" placeholder="Metter l'ID de la reservation">
+        <input type="hidden" name="empid" id="empid" value = <%= empid%>>
+        <button class="emp-btn" type="submit"> Modifier une réservation </button>
+    </form>
+    
+
+    <br>
 
     <form action="/api/employee/new_client" method="GET">
         <button class="emp-btn" type="submit"> Enregistrer un nouveau client </button>
@@ -22,17 +38,19 @@
         <button class="emp-btn" type="submit"> Rechercher un client </button>
     </form>
 
-    <form action="/api/employee/search_res" method="GET">
-        <button class="emp-btn" type="submit"> Rechercher une réservation </button>
-    </form>
+    <br>
 
     <form action="/api/employee/search_chambre" method="GET">
         <button class="emp-btn" type="submit"> Recherchez une chambre </button>
     </form>
 
     <form action="/api/employee/update_contact" method="GET">
+        <input type="text" name="currentnum" id="currentnum" placeholder="Metter le numero courrent de l'hotel ">
+        <input type="hidden" name="empid" id="empid" value = <%= empid%>>
         <button class="emp-btn" type="submit"> Modifier les contacts de l'hôtel </button>
     </form>
+
+    
     
 </body>
 </html>

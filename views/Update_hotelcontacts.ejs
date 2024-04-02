@@ -18,7 +18,9 @@
     <hr>
     <h2 class="h2-intro">Modification de contacts de l'hotel du numere (SELECTED NUMBER HERE)</h2>
 
-    <form action = "UpdateHotCont" method ="post">
+    <form action = "update_contact" method ="post">
+        <input type="hidden" name="currentnum" id="currentnum" value=<%=currentnum%>>
+        <input type="hidden" name="empid" id=" empid" value=<%=empid%>>
         <label for ="numbdetele">Le numéro de téléphone</label>
         <input type ='text' id="numbdetele" name="numbdetele">
 

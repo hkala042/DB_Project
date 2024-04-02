@@ -14,11 +14,13 @@
         </nav>
     </header>
 
-    <h1>Employer (Selected EmpID TO CHANGE)</h1>
+    <h1>Employer</h1>
     <hr>
-    <h2 class="h2-intro">Modifier la reservation (Selected ResID TO CHANGE)</h2>
+    <h2 class="h2-intro">Modifier la reservation <%=res_id%></h2>
 
-    <form action="updateres" method="post">
+    <form action="mod_res" method="post">
+        <input type="hidden" name="resid" id="resid" value=<%= res_id %>>
+        <input type="hidden" name="empid" id=" empid" value=<%=empid%>>
         <label for="chambres_id">L'ID du chambre?</label>
         <input type ='text' id="chambres_id" name="chambres_id">
 

@@ -19,57 +19,6 @@ router.get('/', async (req, res) => {
     res.render('client')
 });
 
-//just to work on Admin things
-router.get('/Update',(req,res) =>{
-    res.render('Update_reservation')
-})
-
-router.post('/updateres',(req,res) =>{
-    const chambres_id = req.body.chambres_id
-    const nas = req.body.NAS
-    const startdate = req.body.startdate
-    const enddate = req.body.enddate
-    //const resid = (get the res id)
-
-    client.query(
-    `Update reservation\
-     SET chambres_id ='${chambres_id}', nas = '${nas}', date_de_début = '${startdate}', date_de_fin = '${enddate}' \
-     WHERE res_id = ${resid}`, (err, result)=>{
-        if(err){
-            res.status(400).send('The modification could not be made')
-        }else{
-            res.redirect('/Employer')
-        }
-    })})
-
-router.route('/UpdateHotCont')
-.get((req,res)=>{
-    res.render('Update_hotelcontacts')
-})
-.post((req,res)=>{
-    const numbdetele = req.body.numbdetele
-    const courriel = req.body.courriel
-    const h_id = req.body.h_id
-    //const currentnum = req.body.currentnum
-
-    client.query(
-        `UPDATE contacts_hotel
-         SET numero = '${numbdetele}', courriel = '${courriel}', h_id = '${h_id}'
-         WHERE numero = '613-222-3333' `,
-        (err, result) => {
-            if (err) {
-                console.error('Error executing query:', err);
-                res.status(400).send('The modification was not successful');
-            } else {
-                res.redirect('/Employer');
-            }
-        }
-    );
-    
-})
-
-//just to work on Admin things
-
 router.route('/login')
 .get((req,res) =>{
     res.render('login',{errorMessage :''})
