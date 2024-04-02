@@ -53,6 +53,11 @@
                             <input type="hidden" name="enddate" value="<%= row.date_de_fin %>">
                             <button type="submit" class="reserve-button">Annuler</button>
                         </form>
+
+                        <form action="probleme/<%= row.chambres_id %>" method="post">
+                            <input type="hidden" name="chambres_id" value="<%= row.chambres_id %>">
+                            <button type="submit" class=" reserve-button">Complaint</button>
+                        </form>
                     </td>
                 </tr>
             <% }); %>

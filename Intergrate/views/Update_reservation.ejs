@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hestia Hotels</title>
+    <link href= "/public/assets/styles.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <header>
+        <nav>
+            <img src="/public/images/HotelPixelArt.png" style="width:50px;height:50px;float: left;">
+            <h1 class="nav-heading"><a href="/">Hestia Hotels</a></h1>
+        </nav>
+    </header>
+
+    <h1>Employer (Selected EmpID TO CHANGE)</h1>
+    <hr>
+    <h2 class="h2-intro">Modifier la reservation (Selected ResID TO CHANGE)</h2>
+
+    <form action="updateres" method="post">
+        <label for="chambres_id">L'ID du chambre?</label>
+        <input type ='text' id="chambres_id" name="chambres_id">
+
+        <br>
+
+        <label for="NAS">Le NAS du client?</label>
+        <input type = 'text' id="NAS" name="NAS">
+
+        <br>
+
+        <label for="date_de_début">Le date de debut de reservation?</label>
+        <input type ="text" id="stardate" name="startdate">
+
+        <br>
+
+        <label for="date_de_début">Le date de fin de reservation?</label>
+        <input type ="text" id="enddate" name="enddate">
+
+        <br>
+
+        <input type="submit" value="Submit">
+
+    </form>
+
+</body>
+</html>
