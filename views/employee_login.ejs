@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hestia Hotels</title>
+    <link href= "/public/assets/styles.css" rel="stylesheet" type="text/css" />
+
+    <style>
+        .container {
+            display: flex;
+            justify-content: space-between;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .login-form, .signup-form {
+            flex-basis: 45%; /* Adjust this value to your liking */
+        }
+
+        .login-form {
+            margin-right: 10px;
+        }
+
+        .signup-form {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="login-form">
+            <h2>Login</h2>
+            <form action="login" method="post">
+                <input type="text" name="nas" placeholder="Metter votre NAS">
+                <button type="submit" name="action" value="login">Login</button>
+            </form>
+        </div>
+        <div class="signup-form">
+            <h2>Signup</h2>
+            <form action="login" method="post">
+                <input type="text" name="firstname" placeholder="Mettez votre premier nom">
+                <input type="text" name="lastname" placeholder="Mettez votre dernier nom">
+                <input type="text" name="nas" placeholder="Metter votre NAS">
+                <input type="text" name="role" placeholder="Mettez votre role">
+                <input type="text" name="streetname" placeholder="Mettez votre nom de rue">
+                <input type="text" name="streetnumb" placeholder="Mettez votre numero de rue">
+                <input type="text" name="postalcode" placeholder="Mettez votre code postal">
+                <input type="text" name="ville" placeholder="Mettez votre ville">
+                <input type="text" name="h_id" placeholder="Mettez votre id de hotel">
+                <button type="submit" name="action" value="signup">Signup</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
