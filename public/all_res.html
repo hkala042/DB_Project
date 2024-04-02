@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All reservations</title>
+</head>
+<body>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Res_ID</th>
+                <th>Chambre_ID</th>
+                <th>Client_ID</th>
+                <th>Date de début</th>
+                <th>Date de fin</th>
+
+            </tr>
+
+
+        </thead>
+
+        <tbody id="data-output">
+
+
+
+        </tbody>
+    </table>
+    <script>
+        function getData(){
+        
+
+        let placeholder = document.querySelector("#data-output");
+        
+           fetch("/api/employee/all_res_view").then(response => response.json()).then(data => {
+            console.log(data[0])
+            let out = "";
+            for (let ress of data){
+                out += `
+                    <tr>
+                            <td>${ress.res_id}</td>
+                            <td>${ress.chambres_id}</td>
+                            <td>${ress.client_id}</td>
+                            <td>${ress.date_de_début}</td>
+                            <td>${ress.date_de_fin}</td>
+                            
+                            </tr>
+                    `;
+                }
+    
+                placeholder.innerHTML = out;
+           });
+          
+            }
+        
+    
+    </script>
+    <button onclick="getData()">Show Results</button>
+    
+</body>
+
+
+</html>

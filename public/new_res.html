@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration of A new Reservation</title>
+
+    <style>
+        .form{
+            width:300px
+
+        }
+    </style>
+</head>
+<body>
+    <p>Veuillez entrer les informations de la nouvelle réservation</p>
+    <div class="form">
+    
+        <label for="chambre_id"> Chambre_ID : </label>
+        <input type="text" id="chambre_id">
+        
+        <label for="client_id"> Client_ID : </label>
+        <input type="number" id="client_id">
+
+        <label for="start_date"> Date de début : </label>
+        <input type="date" id="start_date">
+
+        <label for="end_date"> Date de fin : </label>
+        <input type="date" id="end_date">
+
+        <button id="Add-btn"> Register </button>
+        
+    
+</div>
+    <script>
+        const chambre = document.querySelector('#chambre_id');
+        const client = document.querySelector('#client_id');
+        const start_date = document.querySelector('#start_date');
+        const end_date = document.querySelector('#end_date');
+
+        const add_btn = document.querySelector('#Add-btn');
+
+
+        function addNewRes(){
+            const data = {
+            chambre_id: chambre.value,
+            client_id: client.value,
+            date_de_début: start_date.value,
+            date_de_fin: end_date.value
+        };
+
+        const option = {
+            method:'POST',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify(data)
+        };
+
+        fetch('/api/employee/new_res', option).then(response => response.json()).then(data => {
+            if (data.res) alert("Succès d'enregistrement du compte")
+            else{ alert("Echec, vous ne pouvez pas réservez cette chambre aux dates choisies")}
+        });
+
+        
+    };
+
+    add_btn.addEventListener('click', addNewRes)
+
+    </script>
+    
+</body>
+
+</html>

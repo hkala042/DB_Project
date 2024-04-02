@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register a new Client</title>
+
+    <style>
+        .form{
+            width : 200px
+        }
+    </style>
+</head>
+<body>
+    <div class = "form">
+        <label for ="NAS"> Numéro d'assurance social </label>
+        <input type = "number" id="NAS">
+        
+        <label for ="name"> Nom </label>
+        <input type = "text" id="name">
+
+        <label for ="firstname"> Prénom </label>
+        <input type = "text" id="firstname">
+
+        <label for ="code-postal"> Code Postal </label>
+        <input type = "text" id="code-postal">
+
+        <label for ="rue"> Nom de Rue </label>
+        <input type = "text" id="rue">
+
+        <label for ="num-rue"> Numéro d'adresse </label>
+        <input type = "number" id="num-rue">
+
+        <label for ="ville"> Ville </label>
+        <input type = "text" id="ville">
+
+        <label for ="register-date"> Date d'enregistrement </label>
+        <input type = "date" id="register-date">
+
+    </div>
+
+    <button id="reg-btn"> Enrégistrer </button>
+    <script>
+        const nas = document.querySelector('#NAS');
+        const nom = document.querySelector('#name');
+        const fname = document.querySelector('#firstname');
+        const p_c = document.querySelector('#code-postal');
+        const rue = document.querySelector('#rue');
+        const num_rue = document.querySelector('#num-rue');
+        const ville = document.querySelector('#ville');
+        const reg_date = document.querySelector('#register-date');
+        const reg_btn = document.querySelector('#reg-btn');
+
+        function addNewClient(){
+            const data = {
+                nas: Number(nas.value),
+                nom: nom.value,
+                prenom: fname.value,
+                code_postal: p_c.value,
+                rue: rue.value,
+                num_rue: num_rue.value,
+                ville: ville.value,
+                reg_date: reg_date.value
+
+            };
+            console.log(data);
+
+            const option = {
+                method: 'POST',
+                headers: {
+                    'Content-Type':'application/json'
+                },
+                body: JSON.stringify(data)
+            };
+
+            fetch('/api/employee/new_client', option).then(response => response.json()).then(dt => {
+                if (dt.res) alert("Succès de création de client")
+                else{
+            alert("Une erreur s'est produite ou le client existe déjà dans la basedes données")
+        }
+            });
+
+            
+        }
+
+        reg_btn.addEventListener('click', addNewClient)
+
+    </script>
+</body>
+</html>
