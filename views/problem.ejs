@@ -14,24 +14,17 @@
         </nav>
     </header>
 
-    <h1>Bienvenue</h1>
+    <h1>Décriver votre problème dans la chambre <%=chambres_id%></h1>
     <hr>
-    <h2 class="h2-intro">Choisissez votre méthode de connexion</h2>
-
-    <div class="button-container">
-        <button class="button" onclick="clientButtonClick()">Client</button>
-        <button class="button" onclick="adminButtonClick()">Admin</button>
-    </div>
     
-    <script>
-    function clientButtonClick(){
-        window.location.href = '/client';
-    }
+    <form action ="/client/<%=id%>/probleme/<%=chambres_id%>/submitted" method="post">
+        <label for="textbox"> Metter la description de votre problème</label>
+        <input type ='text' id="problem" name="problem">
+        <input type="submit" value="Submit">
+    </form>
 
-    function adminButtonClick(){
-        window.location.href = '/admin';
-    }
-    </script>
+
+    
 
 </body>
 </html>
