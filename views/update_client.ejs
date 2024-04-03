@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hestia Hotels</title>
+    <link href= "/public/assets/styles.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <header>
+        <nav>
+            <img src="/public/images/HotelPixelArt.png" style="width:50px;height:50px;float: left;">
+            <h1 class="nav-heading"><a href="/">Hestia Hotels</a></h1>
+        </nav>
+    </header>
+
+    <form action="/api/employee/search_client/update"  method="post">
+        <p> Veuillez rentrez les informations à modifier sur le client </p>
+
+        <label for ="nas"> NAS </label>
+        <input type = "number" id="nas" name="nas" value=<%=nas%>>
+
+        <label for ="nom"> Nom </label>
+        <input type = "text" id="nom" name="nom" value=<%=client.nom%>>
+
+        <label for ="prenom"> Prénom </label>
+        <input type = "text" id="prenom" name="prenom" value=<%=client.prenom%>>
+
+        <label for ="code_postal"> Code Postal </label>
+        <input type = "text" id="code_postal" name="code_postal" value=<%=client.code_postal%>>
+
+        <label for ="rue"> Nom de Rue </label>
+        <input type = "text" id="rue" name="rue" value=<%=client.rue%>>
+
+        <label for ="num_rue"> Numéro d'adresse </label>
+        <input type = "number" id="num_rue" name="num_rue" value=<%=client.num_de_rue%>>
+
+        <label for ="ville"> Ville </label>
+        <input type = "text" id="ville" name="ville" value=<%=client.ville%>>
+
+        <button type="submit"> SUBMIT </button>
+    </form>
+</body>
+</html>

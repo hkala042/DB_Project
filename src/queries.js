@@ -46,6 +46,22 @@ const addAdress = "INSERT INTO Adresse (Code_Postal, Rue, Num_de_rue, Ville) val
 
 const addClient = "INSERT INTO Client (NAS, Date_Enreg) values ($1, $2)";
 
+//Requête 13 : Permet de supprimer les informations sur un client en supprimant la personne à laquelle le client refère
+
+const delPerson = "DELETE FROM Personne WHERE NAS = $1";
+
+const getPersonInfo = "SELECT * FROM Personne NATURAL JOIN Adresse WHERE NAS = $1";
+
+const updtAdress = "UPDATE Adresse SET Code_Postal = $2, rue = $3, Num_de_Rue = $4, ville = $5 WHERE Code_Postal IN (SELECT Code_Postal FROM Adresse NATURAL JOIN Personne WHERE NAS = $1)";
+
+const updtPerson = "UPDATE Personne SET Nom = $2, Prenom = $3 WHERE NAS = $1";
+
+const delRes = "DELETE FROM Reservation WHERE Res_ID = $1";
+
+const updtRes = "UPDATE Reservation SET Chambre_ID = $2, Date_de_début = $3, Date_de_fin = $4 WHERE Res_ID = $1";
+
+const getResById = "SELECT * FROM Reservation WHERE Res_ID = $1";
+
 
 module.exports = {
     getRoomBy_city_price,
@@ -59,7 +75,14 @@ module.exports = {
     getClientById,
     addPerson,
     addAdress,
-    addClient
+    addClient,
+    delPerson,
+    getPersonInfo,
+    updtAdress,
+    updtPerson,
+    delRes,
+    updtRes,
+    getResById
 
 }
 

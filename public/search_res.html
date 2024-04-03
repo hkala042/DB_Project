@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hestia Hotels</title>
+    <link href= "/public/assets/styles.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <header>
+        <nav>
+            <img src="/public/images/HotelPixelArt.png" style="width:50px;height:50px;float: left;">
+            <h1 class="nav-heading"><a href="/">Hestia Hotels</a></h1>
+        </nav>
+    </header>
+
+    <p> Veuillez entrer l'ID de la réservation que vous recherchez et cliquez sur l'action à faire</p>
+
+    <div style = "width:250px">
+        <input id="res_id" type="number">
+        <button id="del_btn"> Supprimer la réservation </button>
+        <button id="upd_btn"> Modifier la réservation </button>
+</div>
+
+<script>
+    const res_id = document.querySelector('#res_id');
+    const del_btn = document.querySelector('#del_btn');
+    const upd_btn = document.querySelector('#upd_btn');
+
+    del_btn.addEventListener('click', () =>{
+        const option = {
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({ res_id : res_id.value })
+        }
+
+        fetch("/api/employee/search_res/delete", option).then(res=>res.json()).then(dt=>{
+            if(dt.res) alert("Succès de suppression de la réservation")
+            else{ alert("Echec de suppression de la éservation")}
+        })
+    });
+
+    upd_btn.addEventListener('click', ()=>{
+        fetch("/api/employee/search_res/update")
+    })
+
+    
+</script>
+
+    
+</body>
+</html>

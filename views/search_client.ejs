@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <form action="/api/employee/search_client/delete" action="post">
+    <p> Veuillez entrez le NAS du Client que vous voulez supprimer</p>
+
+    <label for="nas"> Numéro d'assurance sociale </label>
+    <input type="number" id="nas" name="nas">
+    <button id="delete-client" type="submit"> Supprimer le client </button>
+</form>
+</div>
+
+<div>
+
+<form action="/api/employee/search_client/update" action="get">
+    <p> Veuillez entrez le NAS du Client que vous voulez modifier</p>
+    <label for="nas1"> Numéro d'assurance sociale </label>
+    <input type="number" id="nas1" name="nas1">
+    <button id="update-client" type="submit"> Modifier les infos sur le client </button>
+</form>
+</div>
+
+
+</body>
+</html>
