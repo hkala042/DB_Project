@@ -7,7 +7,7 @@
     <link href= "/public/assets/styles.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-    <h1>Bonjour empl <%=empid%></h1>
+    <h1>Bonjour empl <%= empid %></h1>
     
     <form action="/api/employee/all_res" method="GET">
         <button class="emp-btn" type="submit"> Voir toutes les réservations </button>
@@ -27,7 +27,6 @@
         <button class="emp-btn" type="submit"> Modifier une réservation </button>
     </form>
     
-
     <br>
 
     <form action="/api/employee/new_client" method="GET">
@@ -46,11 +45,9 @@
 
     <form action="/api/employee/update_contact" method="GET">
         <input type="text" name="currentnum" id="currentnum" placeholder="Metter le numero courrent de l'hotel ">
-        <input type="hidden" name="empid" id="empid" value = <%= empid%>>
+        <input type="hidden" name="empid" id="empid" value = <%=empid%>>
         <button class="emp-btn" type="submit"> Modifier les contacts de l'hôtel </button>
     </form>
 
-    
-    
 </body>
 </html>
