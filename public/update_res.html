@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hestia Hotels</title>
+    <link href= "/public/assets/styles.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <header>
+        <nav>
+            <img src="/public/images/HotelPixelArt.png" style="width:50px;height:50px;float: left;">
+            <h1 class="nav-heading"><a href="/">Hestia Hotels</a></h1>
+        </nav>
+    </header>
+
+    <div>
+        <p> Veuillez entrer les nouvelles informations sur la réservation ainsi que son ID</p>
+
+
+        <label for="res_id">Res_ID</label>
+        <label for="chambre_id"> Chambre_ID </label>
+        <label for="date_debut"> Date de début </label>
+        <label for="date_fin"> Date de fin </label>
+
+        <input id="res_id" type="number">
+        <input id="chambre_id" type="text">
+        <input id="date_debut" type="date">
+        <input id="date_fin" type="date">
+
+        <button id="btn"> Soumettre </button>
+
+    </div>
+    <script>
+
+        const res_id = document.querySelector('#res_id');
+        const chambre_id = document.querySelector('#chambre_id');
+        const date_debut = document.querySelector('#date_debut');
+        const date_fin = document.querySelector('#date_fin');
+        const btn = document.querySelector('#btn');
+
+        btn.addEventListener('click', ()=>{
+            const data = {
+                res_id: res_id.value,
+                chambre_id : chambre_id.value,
+                date_debut : date_debut.value,
+                date_fin : date_fin.value
+            }
+
+            const option = {
+                method:'POST',
+                headers: {
+                    'Content-Type':'application/json'
+                },
+                body:JSON.stringify(data)
+            }
+
+            fetch("/api/employee/search_res/update/res", option).then(resp=>resp.json()).then(dt=>{
+                if (dt.res) alert("Succès de modification de reservation")
+                else{ alert("Echec! Vous ne pouvez pas modifier cette réservation pour les valeurs choisies") }
+            })
+        })
+
+    </script>
+</body>
+</html>
