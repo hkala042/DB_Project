@@ -14,8 +14,8 @@
         </nav>
     </header>
 
-    <form action="/api/employee/search_client/update"  method="post">
-        <p> Veuillez rentrez les informations à modifier sur le client </p>
+    <form class="form-group" action="/api/employee/search_client/update"  method="post">
+        <h3> Veuillez rentrez les informations à modifier sur le client </h3>
         
         <label for ="nas"> NAS </label>
         <input type = "text" id="nas" name="nas" value=<%=nas%>>
@@ -38,7 +38,7 @@
         <label for ="ville"> Ville </label>
         <input type = "text" id="ville" name="ville" value=<%=client.ville%>>
 
-        <button type="submit"> SUBMIT </button>
+        <button class="button" type="submit"> SUBMIT </button>
     </form>
 </body>
 </html>

@@ -4,25 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link href= "/public/assets/styles.css" rel="stylesheet" type="text/css" />
+    <style>
+        .form {
+            margin-left: 10px;
+        }
+        .form input[type="text"],
+        .form input[type="number"],
+        .form input[type="date"]  {
+            width: 250px;
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-left: 0px;
+            margin-bottom: 20px;
+        }
+        h2 {
+            margin: 10px;
+        }
+    </style>
+
 </head>
 <body>
-    <div>
+    <header>
+        <nav>
+            <img src="/public/images/HotelPixelArt.png" style="width:50px;height:50px;float: left;">
+            <h1 class="nav-heading"><a href="/">Hestia Hotels</a></h1>
+        </nav>
+    </header>
+    <div class="form">
         <form action="/api/employee/search_client/delete" method="POST">
-    <p> Veuillez entrez le NAS du Client que vous voulez supprimer</p>
+            <h3> Veuillez entrez le NAS du Client que vous voulez supprimer</h3>
 
-    <label for="nas"> Numéro d'assurance sociale </label>
-    <input type="text" id="nas" name="nas">
-    <button id="delete-client" type="submit"> Supprimer le client </button>
-</form>
-</div>
+            <label for="nas"> Numéro d'assurance sociale </label>
+            <input type="text" id="nas" name="nas">
+            <button class="button" id="delete-client" type="submit"> Supprimer le client </button>
+        </form>
+    </div>
 
-<div>
+<div class="form">
 
 <form action="/api/employee/search_client/update" method="get">
-    <p> Veuillez entrez le NAS du Client que vous voulez modifier</p>
+    <h3> Veuillez entrez le NAS du Client que vous voulez modifier</h3>
     <label for="nas1"> Numéro d'assurance sociale </label>
     <input type="text" id="nas" name="nas">
-    <button id="update-client" type="submit"> Modifier les infos sur le client </button>
+    <button class="button" id="update-client" type="submit"> Modifier les infos sur le client </button>
 </form>
 </div>
 

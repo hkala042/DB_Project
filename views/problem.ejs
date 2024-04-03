@@ -14,13 +14,15 @@
         </nav>
     </header>
 
-    <h1>Décriver votre problème dans la chambre <%=chambres_id%></h1>
+    <h1>Décrivez votre problème dans la chambre <%=chambres_id%></h1>
     <hr>
     
     <form action ="/client/<%=id%>/probleme/<%=chambres_id%>/submitted" method="post">
-        <label for="textbox"> Metter la description de votre problème</label>
-        <input type ='text' id="problem" name="problem">
-        <input type="submit" value="Submit">
+        <div class="form-group">
+            <label for="textbox"> Metter la description de votre problème</label>
+            <input type ='text' id="problem" name="problem">
+            <input type="submit" value="Submit">
+    </div>
     </form>
 
 
