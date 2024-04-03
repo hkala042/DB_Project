@@ -9,15 +9,18 @@ const client = require('../db');
 router.use('/public', express.static('public'));
 client.connect();
 
+const queries = require('../src/queries');
+
+//page principale du client
 router.get('/', async (req, res) => {
     res.render('client')
 });
 
+//page de login du client
 router.route('/login')
 .get((req,res) =>{
     res.render('login',{errorMessage :''})
 })
-
 .post((req,res) =>{
     const NAS = req.body.nas;
     const password = req.body.password
@@ -41,11 +44,12 @@ router.route('/login')
     })  
 })
 
+//page de login du client
 router.route('/signup')
-    .get((req, res) => {
+.get((req, res) => {
         res.render('signup', { errorMessage: '' }); 
     })
-    .post((req, res, next) => {
+.post((req, res, next) => {
         const first = req.body.firstname;
         const last = req.body.lastname;
         const NAS = req.body.nas;
@@ -61,7 +65,7 @@ router.route('/signup')
         const day = String(currentDate.getDate()).padStart(2, '0');
         const formattedDate = `${year}-${month}-${day}`;
 
-        client.query('INSERT INTO adresse(code_postal, rue, num_de_rue, ville) VALUES ($1, $2, $3, $4)', [postcode, streetname, streetnumber, ville], (err, result) => {
+        client.query(queries.addAdress, [postcode, streetname, streetnumber, ville], (err, result) => {
             if (err) {
                 if (err.message === 'new row for relation "adresse" violates check constraint "len_post_check"') {
                     res.render('signup', { errorMessage: 'Vous avez soumis un code postal non-valide' });
@@ -69,7 +73,7 @@ router.route('/signup')
                     next(err);
                 }
             } else {
-                client.query('INSERT INTO personne(nas, nom, prenom, code_postal) VALUES($1,$2,$3,$4)', [NAS, last, first, postcode], (err, result) =>{
+                client.query(queries.addPerson, [NAS, last, first, postcode], (err, result) =>{
                     if (err){
                         if(err.message === 'duplicate key value violates unique constraint "personne_pkey"'){
                             client.query(`DELETE FROM adresse WHERE code_postal = '${postcode}'`)
@@ -78,7 +82,7 @@ router.route('/signup')
                             next(err);
                         }
                     } else{
-                        client.query('INSERT INTO client(nas, mot_de_passe, date_enreg) VALUES($1,$2,$3)', [NAS, pass, formattedDate], (err, result) =>{
+                        client.query(queries.addClient, [NAS, pass, formattedDate], (err, result) =>{
                             if (err) {
                                 console.error('Error inserting data into client:', err.message);
                                 res.status(500).send('Error inserting data into client');
@@ -94,29 +98,31 @@ router.route('/signup')
         });
  });
 
+//page après le client fait login ou sign up
 router.get('/:id', (req,res) =>{
     const userid = req.params.id;
     res.render('loggedin', { id: userid, errorMessage: '' });
 })
 
+//S'occupe de la reservation de chambres pour les clients
 router.route(`/:id/ressearch`)
 .get(async (req,res) =>{
     const userid = req.params.id;
     try {
-        const villeresult = await client.query('SELECT DISTINCT ville FROM adresse, hotel where adresse.code_postal = hotel.code_postal');
+        const villeresult = await client.query(queries.availVilles);
         const villes = villeresult.rows.map(row => row.ville);
         villes.push('No preferance')
 
-        const hotelresult = await client.query('SELECT DISTINCT nom FROM chaine_hoteliere');
+        const hotelresult = await client.query(queries.getNomsdeChaines);
         const hotels = hotelresult.rows.map(row => row.nom);
         hotels.push('No preferance')
 
-        const superficieresult = await client.query('SELECT DISTINCT superficie from chambres')
+        const superficieresult = await client.query(queries.getsuperficies)
         const superficie = superficieresult.rows.map(row => row.superficie);
         
         superficie.push('No preferance')
 
-        const nchambresresult = await client.query('SELECT DISTINCT nombre_chambres FROM hotel')
+        const nchambresresult = await client.query(queries.getNombresChambres)
         const nchambres = nchambresresult.rows.map(row => row.nombre_chambres);
         nchambres.push('No preferance')
         
@@ -191,6 +197,7 @@ router.route(`/:id/ressearch`)
     });
 });
 
+//S'occupe de la recherche res reservations possibles
 router.route('/:id/resresults')
 .get((req,res) => {
     res.send('hi')
@@ -213,6 +220,7 @@ router.route('/:id/resresults')
     
 })
 
+//S'occupe de la page qui montre les reservations qu'un client a
 router.route('/:id/yourreservation')
 .get((req,res)=>{
     const id = req.params.id
@@ -222,17 +230,17 @@ router.route('/:id/yourreservation')
         res.render('yourreservation',{rows: rows})
         }         
  )})
-
  .post((req,res)=>{
     const id = req.params.id
     res.redirect(`/client/${id}`)
  })
 
+ //S'occupe de l'annulation des réservations
 router.post('/:id/cancelRes',(req,res) =>{
     const id = req.params.id
     const chambre_id = req.body.chambres_id
-    const startdate = new Date(req.body.startdate).toISOString().substring(0, 10); // Format start date
-    const enddate = new Date(req.body.enddate).toISOString().substring(0, 10); // Format end date
+    const startdate = new Date(req.body.startdate).toISOString().substring(0, 10); 
+    const enddate = new Date(req.body.enddate).toISOString().substring(0, 10); 
 
     const currentDate = new Date();
     const startdateObj = new Date(startdate);
@@ -252,11 +260,14 @@ router.post('/:id/cancelRes',(req,res) =>{
                 res.render('yourreservation',{rows: rows,currentDate: currentDate})
     })}})}})
 
+ //S'occupe de l'enregistrement de problemes d'un chambre dans une reservation
 router.post('/:id/probleme/:chambres_id',(req,res)=>{
     const chambres_id = req.body.chambres_id
     const id = req.params.id
     res.render('problem',{chambres_id: chambres_id, id: id})
 })
+
+//S'occupe de renvoyez le clients à ses reservations après la soumission d'un problème
 router.post('/:id/probleme/:chambres_id/submitted', (req, res) => {
     const id = req.params.id;
     const chambres_id = req.params.chambres_id;
@@ -277,7 +288,5 @@ router.post('/:id/probleme/:chambres_id/submitted', (req, res) => {
         }
     });
 });
-
-
-    
+  
 module.exports = router;

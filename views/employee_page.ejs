@@ -7,6 +7,12 @@
     <link href= "/public/assets/styles.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
+    <header>
+        <nav>
+            <img src="/public/images/HotelPixelArt.png" style="width:50px;height:50px;float: left;">
+            <h1 class="nav-heading"><a href="/">Hestia Hotels</a></h1>
+        </nav>
+    </header>
     <h1>Bonjour empl <%= empid %></h1>
     
     <form action="/api/employee/all_res" method="GET">
@@ -39,9 +45,6 @@
 
     <br>
 
-    <form action="/api/employee/search_chambre/1" method="GET">
-        <button class="emp-btn" type="submit"> Recherchez une chambre </button>
-    </form>
 
     <form action="/api/employee/update_contact" method="GET">
         <input type="text" name="currentnum" id="currentnum" placeholder="Metter le numero courrent de l'hotel ">

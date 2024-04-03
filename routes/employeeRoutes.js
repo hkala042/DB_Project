@@ -14,9 +14,11 @@
     res.render('../views/employee_page.ejs')
  });
 
+ //S'occupe de l'affichage des reservations
  router.get("/all_res", (req, res) => {
     res.status(200).sendFile(path.join(__dirname,"../public/all_res.html"))
  });
+
 
 router.get("/all_res_view", (req, res) => {
      pool.query(queries.getAllReservations, (error, result) => {
@@ -26,6 +28,7 @@ router.get("/all_res_view", (req, res) => {
    
 });
 
+//S'occupe de la mise-à-jour des contacts de hotels
 router.get('/update_contact',(req,res)=>{
     const empid = req.query.empid
     const currentnum = req.query.currentnum
@@ -57,11 +60,12 @@ router.post('/update_contact',(req,res)=>{
     
 })
 
-router.get("/new_res", (req, res) => {
+//S'occupe de la creation des reservations par employer
+router.route(`/new_res`)
+.get((req, res) => {
     res.status(200).sendFile(path.join(__dirname,"../public/new_res.html"))
-});
-
-router.post("/new_res", (req, res) => {
+})
+.post((req, res) => {
     const data = req.body;
     pool.query(queries.checkIfRoomAvailable, [data.chambre_id, data.date_de_début], (error, results) => {
         if (error) throw error
@@ -80,11 +84,12 @@ router.post("/new_res", (req, res) => {
     
 });
 
-router.get("/new_client", (req, res) => {
+//S'occupe de la creation des clients
+router.route("/new_client")
+.get((req, res) => {
     res.status(200).sendFile(path.join(__dirname,"../public/new_client.html"))
-});
-
-router.post("/new_client", (req,res) => {
+})
+.post((req,res) => {
     const data = req.body;
     pool.query(queries.getClientById, [data.nas], (error, result) => {
         if (error) throw error
@@ -106,6 +111,7 @@ router.post("/new_client", (req,res) => {
     })
 });
 
+//S'occupe de le log in des employers
 router.route('/login')
 .get((req,res)=>{
     res.render('employee_login')
@@ -180,6 +186,7 @@ router.route('/login')
   }
 })
 
+//
 router.route('/mod_res')
 .get((req, res) => {
         const res_id = req.query.res_id; 
@@ -209,17 +216,13 @@ router.route('/mod_res')
         }
     })})
 
-    
-
-
-
+//S'occupe du sections des clients pour les travailleurs
 router.get("/search_client", (req, res) => {
     const empid = req.query.empid
     res.status(200).render("search_client",{empid: empid})
 });
 
-
-
+//S'occupe de la supprimation des clients
 router.post('/search_client/delete', (req, res) => {
     const nas = req.body.nas;
     pool.query(queries.getClientById, [nas], (error, result) => {
@@ -240,11 +243,10 @@ router.post('/search_client/delete', (req, res) => {
 
 });
 
-//La route de get pour mettre à jour le client, elle doit juste rendre la page ejs de mise à jour 
-//Mais ça ne marche pas, je ne comprends pas pourquoi
 
-
-router.get("/search_client/update", (req, res) => {
+//S'occupe de la mise-à-jour des clients
+router.route('/search_client/update')
+.get((req, res) => {
     const nas = req.query.nas;
     console.log(nas)
     
@@ -268,11 +270,8 @@ router.get("/search_client/update", (req, res) => {
             
 
     })
-});
-
-//Le post qui permet de mettre à jour un client lorsque ses données sont passées dans le body de la requête par le ejs form
-//ça marche bien mais le problème est que la page doit d'abord être rendue par le get précédent qui ne marche pas
-router.post("/search_client/update", (req, res) => {
+})
+.post((req, res) => {
     const nas = req.body.nas;
     const nom = req.body.nom;
     const prenom = req.body.prenom;
@@ -297,14 +296,18 @@ router.post("/search_client/update", (req, res) => {
     res.redirect('/api/employee/login')
 });
 
+//S'occupe de la recherche des reservations
 router.get("/search_res/s", (req, res) => {
     res.status(200).sendFile(path.join(__dirname,"../public/search_res.html"))
 });
 
+
+//S'occupe de la mise-à-jour des reservations
 router.get("/search_res/update", (req, res) => {
     res.status(200).sendFile(path.join(__dirname, "../public/update_res.html"))
 });
 
+//S'occupe de la supprimation des reservations
 router.post("/search_res/delete", (req, res) => {
     const res_id = req.body.res_id;
 
@@ -314,6 +317,7 @@ router.post("/search_res/delete", (req, res) => {
     })
 });
 
+//
 router.post("/search_res/update/res", (req, res ) => {
 
     const res_id = req.body.res_id
@@ -333,6 +337,7 @@ router.post("/search_res/update/res", (req, res ) => {
     })
 });
 
+//
 router.get("/search_res/get_res/:id", (req, res)=>{
     pool.query(queries.getResById, [req.params.id], (err, resu)=>{
         if (err) throw err
@@ -343,6 +348,7 @@ router.get("/search_res/get_res/:id", (req, res)=>{
     })
 });
 
+//
 router.get('/:id',(req,res)=>{
     const empid = req.params.id
     res.render('employee_page',{empid:empid})
