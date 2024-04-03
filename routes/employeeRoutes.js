@@ -181,7 +181,7 @@ router.route('/login')
 })
 
 router.route('/mod_res')
-    .get((req, res) => {
+.get((req, res) => {
         const res_id = req.query.res_id; 
         const empid= req.query.empid
         res.render('Update_reservation', { res_id: res_id, empid: empid });
@@ -209,14 +209,16 @@ router.route('/mod_res')
         }
     })})
 
-router.get('/:id',(req,res)=>{
-    const empid = req.params.id
-    res.render('employee_page',{empid:empid})
+    
+
+
+
+router.get("/search_client", (req, res) => {
+    const empid = req.query.empid
+    res.status(200).render("search_client",{empid: empid})
 });
 
-router.get("/search_client/:id", (req, res) => {
-    res.status(200).render("search_client")
-});
+
 
 router.post('/search_client/delete', (req, res) => {
     const nas = req.body.nas;
@@ -231,7 +233,7 @@ router.post('/search_client/delete', (req, res) => {
                     res.send({ res:false });
                     throw error1
                 }
-                res.status(200).send( { res: true })
+                res.redirect('/api/employee/login')
             } )
         }else{ res.json({ res: false }) }
     })
@@ -241,9 +243,12 @@ router.post('/search_client/delete', (req, res) => {
 //La route de get pour mettre à jour le client, elle doit juste rendre la page ejs de mise à jour 
 //Mais ça ne marche pas, je ne comprends pas pourquoi
 
+
 router.get("/search_client/update", (req, res) => {
-    const nas = req.body.nas1;
-    pool.query(queries.getClientById, [nas], (error, result) => {
+    const nas = req.query.nas;
+    console.log(nas)
+    
+      pool.query(queries.getClientById, [nas], (error, result) => {
         if (error){
             res.send( { res: false });
             throw error
@@ -275,7 +280,9 @@ router.post("/search_client/update", (req, res) => {
     const rue = req.body.rue;
     const num_rue = req.body.num_rue;
     const ville = req.body.ville;
+    const empid = req.body.empid
 
+ 
     pool.query(queries.updtAdress, [nas, code_postal, rue, num_rue, ville], (err, resu) =>{
         if (err){
             res.status(400);
@@ -286,6 +293,8 @@ router.post("/search_client/update", (req, res) => {
         })
 
     })
+
+    res.redirect('/api/employee/login')
 });
 
 router.get("/search_res/s", (req, res) => {
@@ -332,6 +341,11 @@ router.get("/search_res/get_res/:id", (req, res)=>{
         }
         else{ res.send({ res:false }) }
     })
+});
+
+router.get('/:id',(req,res)=>{
+    const empid = req.params.id
+    res.render('employee_page',{empid:empid})
 });
 
 
