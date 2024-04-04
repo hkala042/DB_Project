@@ -14,21 +14,24 @@
         </nav>
     </header>
 
-    <div>
-        <p> Veuillez entrer les nouvelles informations sur la réservation ainsi que son ID</p>
+    <div class="form-group">
+        <h3> Veuillez entrer les nouvelles informations sur la réservation ainsi que son ID</h3>
 
 
         <label for="res_id">Res_ID</label>
+        <input id="res_id" type="number">
+
         <label for="chambre_id"> Chambre_ID </label>
+        <input id="chambre_id" type="text">
+
         <label for="date_debut"> Date de début </label>
+        <input id="date_debut" type="date">
+
         <label for="date_fin"> Date de fin </label>
 
-        <input id="res_id" type="number">
-        <input id="chambre_id" type="text">
-        <input id="date_debut" type="date">
         <input id="date_fin" type="date">
 
-        <button id="btn"> Soumettre </button>
+        <button class="button" id="btn"> Soumettre </button>
 
     </div>
     <script>

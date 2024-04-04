@@ -4,14 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register a new Client</title>
+    <link href= "/public/assets/styles.css" rel="stylesheet" type="text/css" />
+
 
     <style>
-        .form{
-            width : 200px
+        .form {
+            margin-left: 10px;
+            width: 250px;
+
+        }
+        .form input[type="text"],
+        .form input[type="number"],
+        .form input[type="date"]  {
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-left: 0px;
+            margin-bottom: 20px;
+        }
+        h2 {
+            margin: 10px;
         }
     </style>
 </head>
 <body>
+    <header>
+        <nav>
+            <img src="/public/images/HotelPixelArt.png" style="width:50px;height:50px;float: left;">
+            <h1 class="nav-heading"><a href="/">Hestia Hotels</a></h1>
+        </nav>
+    </header>
+    <h2>Veuillez entrer les informations du nouveau client</h2>
     <div class = "form">
         <label for ="NAS"> Numéro d'assurance social </label>
         <input type = "number" id="NAS">
@@ -28,18 +52,23 @@
         <label for ="rue"> Nom de Rue </label>
         <input type = "text" id="rue">
 
+        <br>
         <label for ="num-rue"> Numéro d'adresse </label>
         <input type = "number" id="num-rue">
 
+        <br>
         <label for ="ville"> Ville </label>
+        <br>
+
         <input type = "text" id="ville">
 
+        <br>
         <label for ="register-date"> Date d'enregistrement </label>
         <input type = "date" id="register-date">
 
     </div>
 
-    <button id="reg-btn"> Enrégistrer </button>
+    <button class="button" id="reg-btn"> Enregistrer </button>
     <script>
         const nas = document.querySelector('#NAS');
         const nom = document.querySelector('#name');

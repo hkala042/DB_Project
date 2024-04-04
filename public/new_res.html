@@ -4,31 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration of A new Reservation</title>
+    <link href= "/public/assets/styles.css" rel="stylesheet" type="text/css" />
+
 
     <style>
-        .form{
-            width:300px
+        .form {
+            margin-left: 10px;
+        }
+        .form input[type="text"],
+        .form input[type="number"],
+        .form input[type="date"]  {
+            width: 250px;
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-left: 0px;
+            margin-bottom: 20px;
+        }
 
+        h2 {
+            margin: 10px;
         }
     </style>
 </head>
 <body>
-    <p>Veuillez entrer les informations de la nouvelle réservation</p>
+    <header>
+        <nav>
+            <img src="/public/images/HotelPixelArt.png" style="width:50px;height:50px;float: left;">
+            <h1 class="nav-heading"><a href="/">Hestia Hotels</a></h1>
+        </nav>
+    </header>
+    <h2>Veuillez entrer les informations de la nouvelle réservation</h2>
     <div class="form">
     
         <label for="chambre_id"> Chambre_ID : </label>
         <input type="text" id="chambre_id">
         
+        <br>
         <label for="client_id"> Client_ID : </label>
         <input type="number" id="client_id">
 
+        <br>
         <label for="start_date"> Date de début : </label>
         <input type="date" id="start_date">
 
+        <br>
         <label for="end_date"> Date de fin : </label>
         <input type="date" id="end_date">
 
-        <button id="Add-btn"> Register </button>
+        <button class="button" id="Add-btn"> Register </button>
         
     
 </div>

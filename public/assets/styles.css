@@ -38,6 +38,10 @@ body h1 {
     margin: 10px;
 }
 
+p {
+  margin: 10px;
+}
+
 .h2-intro {
   margin: 10px;
 }
@@ -67,6 +71,11 @@ nav {
     margin: 0;
 }
 
+td {
+  padding: 5px;
+  background-color: rgb(194, 194, 194);
+}
+
 .button-container {
   text-align: center;
   margin-top: 20px;
@@ -74,7 +83,8 @@ nav {
 
 .button {
   padding: 10px 20px;
-  margin: 0 50px;
+  margin: 0 10px;
+  margin-bottom: 20px;
   font-size: 16px;
   background-color: #007bff; 
   color: white;
@@ -89,12 +99,68 @@ nav {
 }
 
 
+
+.emp-btn {
+  padding: 10px 20px;
+  margin: 0 50px;
+  font-size: 16px;
+  background-color: #007bff; 
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin: 10px;
+  width: 250px;
+}
+
+.emp-btn-side {
+  padding: 10px 20px;
+  margin: 0 10px;
+  font-size: 16px;
+  background-color: #007bff; 
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 250px;
+}
+
+.emp-btn:hover {
+  background-color: #0056b3; 
+}
+
+.emp-btn-side:hover {
+  background-color: #0056b3; 
+}
+
+.button-admin {
+  float: left;
+  padding: 10px 20px;
+  margin: 0 0px;
+  font-size: 16px;
+  background-color: #ff0000; 
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.button-admin:hover {
+  background-color: #b30000; 
+}
+
+
 .login-form {
   width: 300px;
-  margin: 0 auto;
+  margin-bottom: 20px;
+  margin: 0 auto 20px;
 }
 
 .form-group {
+  margin-left: 10px;
   margin-bottom: 20px;
 }
 
@@ -102,13 +168,44 @@ nav {
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
+  margin-left: 10px;
 }
 
 .form-group input[type="text"],
-.form-group input[type="password"] {
-  width: 100%;
+.form-group input[type="password"],
+.form-group input[type="number"],
+.form-group input[type="date"],
+.form-group select[id="chaine_hotel"],
+.form-group select[id="ville"],
+.form-group select[id="capacite"],
+.form-group select[id="categorie"],
+.form-group select[id="superficie"],
+.form-group select[id="nchambres"]   {
+  width: 250px;
   padding: 8px;
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  margin-left: 0px;
+}
+
+.form-group input[type="submit"] {
+  padding: 10px 20px;
+  margin: 0 10px;
+  font-size: 16px;
+  background-color: #007bff; 
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.form-group-side input[type="text"] {
+  width: 300px;
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  float: left;
 }
