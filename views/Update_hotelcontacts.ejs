@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hestia Hotels</title>
     <link href= "/public/assets/styles.css" rel="stylesheet" type="text/css" />
+    <style>
+        .form-group input[type="submit"] {
+            margin: 10px;
+        }
+        
+    </style>
 </head>
 <body>
     <header>
@@ -16,29 +22,24 @@
 
     <h1>Employer (Selected Emp ID to change)</h1>
     <hr>
-    <h2 class="h2-intro">Modification de contacts de l'hotel du numere (SELECTED NUMBER HERE)</h2>
+    <h2 class="h2-intro">Modification de contacts de l'hotel du numero (SELECTED NUMBER HERE)</h2>
 
-    <form action = "update_contact" method ="post">
-        <input type="hidden" name="currentnum" id="currentnum" value=<%=currentnum%>>
-        <input type="hidden" name="empid" id=" empid" value=<%=empid%>>
-        <label for ="numbdetele">Le numéro de téléphone</label>
-        <input type ='text' id="numbdetele" name="numbdetele">
-
-        <br>
-
-        <label for="emaildetele">Le courriel</label>
-        <input type="text" id="courriel" name="courriel">
-
-        <br>
-
-        <label for="h_id">Le ID de l'hotel</label>
-        <input type="text" id="h_id" name="h_id">
-
-        <br>
-
-        <input type="submit" value="Submit">
-
-    </form>
+    <div class="form-group">
+        <form action = "update_contact" method ="post">
+            <input type="hidden" name="currentnum" id="currentnum" value=<%=currentnum%>>
+            <input type="hidden" name="empid" id=" empid" value=<%=empid%>>
+            <label for ="numbdetele">Le numéro de téléphone</label>
+            <input type ='text' id="numbdetele" name="numbdetele">
+            <br>
+            <label for="emaildetele">Le courriel</label>
+            <input type="text" id="courriel" name="courriel">
+            <br>
+            <label for="h_id">Le ID de l'hotel</label>
+            <input type="text" id="h_id" name="h_id">
+            <br>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
 
    
 

@@ -182,7 +182,7 @@ router.route('/login')
 })
 
 router.route('/mod_res')
-    .get((req, res) => {
+.get((req, res) => {
         const res_id = req.query.res_id; 
         const empid= req.query.empid
         res.render('Update_reservation', { res_id: res_id, empid: empid });
@@ -209,9 +209,144 @@ router.route('/mod_res')
         }
     })})
 
+    
+
+
+
+router.get("/search_client", (req, res) => {
+    const empid = req.query.empid
+    res.status(200).render("search_client",{empid: empid})
+});
+
+
+
+router.post('/search_client/delete', (req, res) => {
+    const nas = req.body.nas;
+    pool.query(queries.getClientById, [nas], (error, result) => {
+        if (error){
+            res.send( { res: false });
+            throw error
+        }
+        if (result.rows.length > 0 ){
+            pool.query(queries.delPerson, [nas], (error1, result1) => {
+                if (error1){ 
+                    res.send({ res:false });
+                    throw error1
+                }
+                res.redirect('/api/employee/login')
+            } )
+        }else{ res.json({ res: false }) }
+    })
+
+});
+
+//La route de get pour mettre à jour le client, elle doit juste rendre la page ejs de mise à jour 
+//Mais ça ne marche pas, je ne comprends pas pourquoi
+
+
+router.get("/search_client/update", (req, res) => {
+    const nas = req.query.nas;
+    console.log(nas)
+    
+      pool.query(queries.getClientById, [nas], (error, result) => {
+        if (error){
+            res.send( { res: false });
+            throw error
+        }
+        if (result.rows.length > 0){
+            pool.query(queries.getPersonInfo, [nas], (err, resu) => {
+                if (err){
+                    res.send( { res: false });
+                    throw err
+                }
+                const client = resu.rows[0];
+                res.status(200).render("update_client", { client : client, nas : nas })
+                
+                
+            })
+        }
+            
+
+    })
+});
+
+//Le post qui permet de mettre à jour un client lorsque ses données sont passées dans le body de la requête par le ejs form
+//ça marche bien mais le problème est que la page doit d'abord être rendue par le get précédent qui ne marche pas
+router.post("/search_client/update", (req, res) => {
+    const nas = req.body.nas;
+    const nom = req.body.nom;
+    const prenom = req.body.prenom;
+    const code_postal = req.body.code_postal;
+    const rue = req.body.rue;
+    const num_rue = req.body.num_rue;
+    const ville = req.body.ville;
+    const empid = req.body.empid
+
+ 
+    pool.query(queries.updtAdress, [nas, code_postal, rue, num_rue, ville], (err, resu) =>{
+        if (err){
+            res.status(400);
+            throw err
+        }
+        pool.query(queries.updtPerson, [nas, nom, prenom], (err1, res1) =>{
+            if(err1) throw err1
+        })
+
+    })
+
+    res.redirect('/api/employee/login')
+});
+
+router.get("/search_res/s", (req, res) => {
+    res.status(200).sendFile(path.join(__dirname,"../public/search_res.html"))
+});
+
+router.get("/search_res/update", (req, res) => {
+    res.status(200).sendFile(path.join(__dirname, "../public/update_res.html"))
+});
+
+router.post("/search_res/delete", (req, res) => {
+    const res_id = req.body.res_id;
+
+    pool.query(queries.delRes, [res_id], (err, resu) => {
+        if (err) throw err
+        res.send({ res : true})
+    })
+});
+
+router.post("/search_res/update/res", (req, res ) => {
+
+    const res_id = req.body.res_id
+    const chambre_id = req.body.chambre_id;
+    const debut_date = req.body.debut_date;
+    const fin_date = req.body.fin_date;
+
+    pool.query(queries.checkIfRoomAvailable, [chambre_id, debut_date], (err, resu) =>{
+        if (err) throw err
+        if (resu.rows.length > 0) res.send( { res : 'NOT AVAILABLE'})
+        else{
+    pool.query(queries.updtRes, [res_id, chambre_id, debut_date, fin_date], (err1, res1)=>{
+        if (err1) throw err1
+        else{ res.send({ res : true})}
+    })
+    }
+    })
+});
+
+router.get("/search_res/get_res/:id", (req, res)=>{
+    pool.query(queries.getResById, [req.params.id], (err, resu)=>{
+        if (err) throw err
+        if (resu.rows.length > 0 ){
+            res.status(200).send(resu.rows)
+        }
+        else{ res.send({ res:false }) }
+    })
+});
+
 router.get('/:id',(req,res)=>{
     const empid = req.params.id
     res.render('employee_page',{empid:empid})
-})
+});
+
 
  module.exports = router

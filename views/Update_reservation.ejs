@@ -18,7 +18,7 @@
     <hr>
     <h2 class="h2-intro">Modifier la reservation <%=res_id%></h2>
 
-    <form action="mod_res" method="post">
+    <form class="form-group" action="mod_res" method="post">
         <input type="hidden" name="resid" id="resid" value=<%= res_id %>>
         <input type="hidden" name="empid" id=" empid" value=<%=empid%>>
         <label for="chambres_id">L'ID du chambre?</label>
@@ -39,6 +39,7 @@
         <label for="date_de_début">Le date de fin de reservation?</label>
         <input type ="text" id="enddate" name="enddate">
 
+        <br>
         <br>
 
         <input type="submit" value="Submit">

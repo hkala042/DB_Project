@@ -1,16 +1,10 @@
 //stuff for database
-const { Client } = require('pg');
+//const { Client } = require('pg');
 const express = require('express');
 const router = express.Router();
 
 // Create a new client instance and connect to the database
-const client = new Client({
-    host: "localhost",
-    user: "postgres",
-    port: 5432,
-    password: "s/83Fvq/pG",
-    database: "CSI2532"
-});
+const client = require('../db');
 
 router.use('/public', express.static('public'));
 client.connect();
@@ -283,11 +277,6 @@ router.post('/:id/probleme/:chambres_id/submitted', (req, res) => {
         }
     });
 });
-
-
-
-
-
 
 
     
