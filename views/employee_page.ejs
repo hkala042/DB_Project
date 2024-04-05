@@ -13,7 +13,7 @@
             <h1 class="nav-heading"><a href="/">Hestia Hotels</a></h1>
         </nav>
     </header>
-    <h1>Bonjour empl <%= empid %></h1>
+    <h1>Bonjour employé <%= empid %></h1>
     
     <form action="/api/employee/all_res" method="GET">
         <button class="emp-btn" type="submit"> Voir toutes les réservations </button>
@@ -27,11 +27,7 @@
         <button class="emp-btn" type="submit"> Enregistrer une nouvelle réservation </button>
     </form>
 
-    <form action="/api/employee/mod_res" method="GET">
-        <div class="form-group-side"><input type="text" name="res_id" id="res_id" placeholder="Metter l'ID de la reservation"></div>
-        <input type="hidden" name="empid" id="empid" value = <%= empid%>>
-        <button class="emp-btn-side" type="submit"> Modifier une réservation </button>
-    </form>
+    
     
     <br>
 
