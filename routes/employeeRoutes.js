@@ -9,6 +9,7 @@
  pool.connect();
 
  const queries = require('../src/queries');
+const e = require('express');
 
  router.get("/", (req,res) => {
     res.render('../views/employee_page.ejs')
@@ -59,27 +60,28 @@ router.route('/update_contact')
 });
 
 router.route('/new_res')
-.get((req, res) => {
-    res.status(200).sendFile(path.join(__dirname,"../public/new_res.html"))
+.get((req,res) =>{
+    res.render('employee_new_res')
 })
-.post((req, res) => {
-    const data = req.body;
-    pool.query(queries.checkIfRoomAvailable, [data.chambre_id, data.date_de_début], (error, results) => {
-        if (error) throw error
-        if (results.rows.length > 0) res.json({ res : false})
-        else{
-            pool.query(queries.addNewReservation, [data.chambre_id, data.client_id, data.date_de_début, data.date_de_fin], 
-                (error, result) => {
-                    if (error) res.status(500).send("Une erreur s'est produite putain!!!!")
+.post((req,res)=>{
+    const Chambres_id = req.body.Chambres_id
+    const Client_id = req.body.Client_id
+    const startdate = req.body.startdate
+    const enddate = req.body.enddate
 
-                });
-            res.status(200).json({ res : true })
-    }
-   
-    })
+    console.log(Chambres_id)
+    console.log(Client_id)
+    console.log(startdate)
+    console.log(enddate)
 
-    
-});
+    pool.query(queries.addRes, [Chambres_id, Client_id, startdate, enddate], (error,result) =>{
+        if (error){
+            res.status(400).send(error.message)
+        }else{
+            res.send('Succesful')
+        }
+    } )
+})
 
 router.route('/new_client')
 .get((req, res) => {

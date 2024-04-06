@@ -50,15 +50,31 @@ const addClient = "INSERT INTO Client (NAS, Date_Enreg) values ($1, $2)";
 
 const delPerson = "DELETE FROM Personne WHERE NAS = $1";
 
+//Requête 14 : Permet l'insertion d'une reservation
+
+const addRes = 'INSERT INTO reservation (chambres_id, nas, date_de_début, date_de_fin) values ($1, $2, $3, $4)'
+
+//Requête 15 : Permet de trouver les infos d'une personne selon leur NAS
+
 const getPersonInfo = "SELECT * FROM Personne NATURAL JOIN Adresse WHERE NAS = $1";
+
+//Requête 16 : Permet la modification des adresses des personnes
 
 const updtAdress = "UPDATE Adresse SET Code_Postal = $2, rue = $3, Num_de_Rue = $4, ville = $5 WHERE Code_Postal IN (SELECT Code_Postal FROM Adresse NATURAL JOIN Personne WHERE NAS = $1)";
 
+//Requête 17 : Permet la modification des personnes selon leur NAS
+
 const updtPerson = "UPDATE Personne SET Nom = $2, Prenom = $3 WHERE NAS = $1";
+
+//Requête 18 : Permet de supprimer une reservation selon le Res_ID 
 
 const delRes = "DELETE FROM Reservation WHERE Res_ID = $1";
 
+//Requête 19 : Permet de modifier des reservations selon leurs Res_ID
+
 const updtRes = "UPDATE Reservation SET Chambre_ID = $2, Date_de_début = $3, Date_de_fin = $4 WHERE Res_ID = $1";
+
+//Requête 20 : Permet de trouver les infos d'une reservation selon leeurs Res_ID
 
 const getResById = "SELECT * FROM Reservation WHERE Res_ID = $1";
 
@@ -82,6 +98,7 @@ module.exports = {
     updtPerson,
     delRes,
     updtRes,
+    addRes,
     getResById
 
 }
