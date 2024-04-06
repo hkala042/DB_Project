@@ -172,7 +172,7 @@ router.route('/login')
                             }
             
                             console.log('Data inserted successfully into client');
-                            res.redirect(`api/employee/${NAS}`); 
+                            res.redirect(`/api/employee/${NAS}`); 
                         })
                     }
                 })
