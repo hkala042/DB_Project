@@ -99,7 +99,7 @@ router.get('/:id', (req,res) =>{
     res.render('loggedin', { id: userid, errorMessage: '' });
 })
 
-router.route(`/:id/ressearch`)
+router.route('/:id/ressearch')
 .get(async (req,res) =>{
     const userid = req.params.id;
     try {
