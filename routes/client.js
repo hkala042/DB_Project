@@ -120,7 +120,7 @@ router.route('/:id/ressearch')
         const nchambres = nchambresresult.rows.map(row => row.nombre_chambres);
         nchambres.push('No preferance')
         
-
+//just to check something
         res.render(`ressearch`, {id: userid,villes: villes, hotels: hotels, superficie: superficie, nchambres: nchambres});
     } catch (error) {
         console.error('Error executing query:', error.message);
