@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All reservations</title>
     <link href="/public/assets/styles.css" rel="stylesheet" type="text/css" />
-
+    <style>
+        .results-table {
+            margin: 10px;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -15,26 +19,21 @@
         </nav>
     </header>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Res_ID</th>
-                <th>Chambre_ID</th>
-                <th>Client_ID</th>
-                <th>Date de début</th>
-                <th>Date de fin</th>
-
-            </tr>
-
-
-        </thead>
-
-        <tbody id="data-output">
-
-
-
-        </tbody>
-    </table>
+    <div class="results-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Res_ID</th>
+                    <th>Chambre_ID</th>
+                    <th>Client_ID</th>
+                    <th>Date de début</th>
+                    <th>Date de fin</th>
+                </tr>
+            </thead>
+            <tbody id="data-output">
+            </tbody>
+        </table>
+    </div>
     <script>
         function getData(){
         
