@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employee Home page</title>
     <link href= "/public/assets/styles.css" rel="stylesheet" type="text/css" />
+    <style>
+        .form-group-side input[type="text"] {
+            margin-left: 10px;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -29,7 +34,6 @@
 
     
     
-    <br>
 
     <form action="/api/employee/new_client" method="GET">
         <button class="emp-btn" type="submit"> Enregistrer un nouveau client </button>
@@ -39,10 +43,9 @@
         <button class="emp-btn" type="submit"> Rechercher un client </button>
     </form>
 
-    <br>
 
     <form action="/api/employee/search_chambre/1" method="GET">
-        <button class="emp-btn" type="submit"> Recherchez une chambre </button>
+        <button class="emp-btn" type="submit"> Rechercher une chambre </button>
     </form>
 
     <form action="/api/employee/update_contact" method="GET">
