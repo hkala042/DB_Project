@@ -26,13 +26,14 @@ router.get("/all_res_view", (req, res) => {
    
 });
 
-router.get('/update_contact',(req,res)=>{
+router.route('/update_contact')
+.get((req,res)=>{
     const empid = req.query.empid
     const currentnum = req.query.currentnum
     console.log(empid)
     res.render('Update_hotelcontacts',{currentnum: currentnum, empid:empid})
 })
-router.post('/update_contact',(req,res)=>{
+.post((req,res)=>{
     const numbdetele = req.body.numbdetele
     const courriel = req.body.courriel
     const h_id = req.body.h_id
@@ -55,13 +56,13 @@ router.post('/update_contact',(req,res)=>{
         }
     );
     
-})
-
-router.get("/new_res", (req, res) => {
-    res.status(200).sendFile(path.join(__dirname,"../public/new_res.html"))
 });
 
-router.post("/new_res", (req, res) => {
+router.route('/new_res')
+.get((req, res) => {
+    res.status(200).sendFile(path.join(__dirname,"../public/new_res.html"))
+})
+.post((req, res) => {
     const data = req.body;
     pool.query(queries.checkIfRoomAvailable, [data.chambre_id, data.date_de_début], (error, results) => {
         if (error) throw error
@@ -80,11 +81,11 @@ router.post("/new_res", (req, res) => {
     
 });
 
-router.get("/new_client", (req, res) => {
+router.route('/new_client')
+.get((req, res) => {
     res.status(200).sendFile(path.join(__dirname,"../public/new_client.html"))
-});
-
-router.post("/new_client", (req,res) => {
+})
+.post((req,res) => {
     const data = req.body;
     pool.query(queries.getClientById, [data.nas], (error, result) => {
         if (error) throw error
@@ -171,7 +172,7 @@ router.route('/login')
                             }
             
                             console.log('Data inserted successfully into client');
-                            res.redirect(`api/employee/${NAS}`); 
+                            res.redirect(`/api/employee/${NAS}`); 
                         })
                     }
                 })
@@ -185,8 +186,7 @@ router.route('/mod_res')
         const res_id = req.query.res_id; 
         const empid= req.query.empid
         res.render('Update_reservation', { res_id: res_id, empid: empid });
-    })
-
+})
 .post((req,res) =>{
     const resid = req.body.resid;
     const chambres_id = req.body.chambres_id;
