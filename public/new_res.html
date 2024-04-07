@@ -42,8 +42,8 @@
         <input type="text" id="chambre_id">
         
         <br>
-        <label for="client_id"> Client_ID : </label>
-        <input type="text" id="client_id">
+        <label for="client_nas"> Client_NAS : </label>
+        <input type="text" id="client_nas">
 
         <br>
         <label for="start_date"> Date de début : </label>
@@ -59,7 +59,7 @@
 </div>
     <script>
         const chambre = document.querySelector('#chambre_id');
-        const client = document.querySelector('#client_id');
+        const client = document.querySelector('#client_nas');
         const start_date = document.querySelector('#start_date');
         const end_date = document.querySelector('#end_date');
 
@@ -69,7 +69,7 @@
         function addNewRes(){
             const data = {
             chambre_id: chambre.value,
-            client_id: client.value,
+            client_nas: client.value,
             date_de_début: start_date.value,
             date_de_fin: end_date.value
         };

@@ -38,7 +38,7 @@
     <h2>Veuillez entrer les informations du nouveau client</h2>
     <div class = "form">
         <label for ="NAS"> Numéro d'assurance social </label>
-        <input type = "number" id="NAS">
+        <input type = "text" id="NAS">
         
         <label for ="name"> Nom </label>
         <input type = "text" id="name">
@@ -61,6 +61,9 @@
         <br>
 
         <input type = "text" id="ville">
+        
+        <label for ="password"> Mot de passe </label>
+        <input type = "text" id="password">
 
         <br>
         <label for ="register-date"> Date d'enregistrement </label>
@@ -79,17 +82,19 @@
         const ville = document.querySelector('#ville');
         const reg_date = document.querySelector('#register-date');
         const reg_btn = document.querySelector('#reg-btn');
+        const passw = document.querySelector('#password');
 
         function addNewClient(){
             const data = {
-                nas: Number(nas.value),
+                nas: nas.value,
                 nom: nom.value,
                 prenom: fname.value,
                 code_postal: p_c.value,
                 rue: rue.value,
                 num_rue: num_rue.value,
                 ville: ville.value,
-                reg_date: reg_date.value
+                reg_date: reg_date.value,
+                password: passw.value
 
             };
             console.log(data);

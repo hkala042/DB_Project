@@ -68,7 +68,7 @@ router.route('/new_res')
         if (error) throw error
         if (results.rows.length > 0) res.json({ res : false})
         else{
-            pool.query(queries.addNewReservation, [data.chambre_id, data.client_id, data.date_de_début, data.date_de_fin], 
+            pool.query(queries.addNewReservation, [data.chambre_id, data.client_nas, data.date_de_début, data.date_de_fin], 
                 (error, result) => {
                     if (error) res.status(500).send("Une erreur s'est produite putain!!!!")
 
@@ -96,7 +96,7 @@ router.route('/new_client')
         if (error1) throw error1
         pool.query(queries.addPerson, [data.nas, data.nom, data.prenom, data.code_postal], (error2, res2) =>{
             if (error2) throw error2
-            pool.query(queries.addClient, [data.nas, data.reg_date], (error3, res3) => {
+            pool.query(queries.addClient, [data.nas, data.password, data.reg_date], (error3, res3) => {
                 if (error3) throw error3
             })
         })
@@ -120,7 +120,7 @@ router.route('/login')
     
         const query = {
             text: 'SELECT * FROM employe WHERE nas = $1',
-            values: [NAS]
+            values: [nas]
         };
     
         pool.query(query,(err, result) => {
@@ -166,12 +166,12 @@ router.route('/login')
                     } else{
                         pool.query('INSERT INTO employe(nas, rôle, h_id) VALUES($1,$2,$3)', [NAS, role, h_id], (err, result) =>{
                             if (err) {
-                                console.error('Error inserting data into client:', err.message);
-                                res.status(500).send('Error inserting data into client');
+                                console.error('Error inserting data into employe:', err.message);
+                                res.status(500).send('Error inserting data into Employe');
                                 return;
                             }
             
-                            console.log('Data inserted successfully into client');
+                            console.log('Data inserted successfully into Employe');
                             res.redirect(`/api/employee/${NAS}`); 
                         })
                     }

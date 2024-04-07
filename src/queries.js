@@ -25,7 +25,7 @@ const getAllReservations = "SELECT * FROM Reservation";
 
 //Requete 7 : Permettant d'ajouter une nouvelle réservation
 
-const addNewReservation = "INSERT INTO Reservation (Chambres_ID, Client_ID, Date_de_début, Date_de_fin) values ($1, $2, $3, $4)"
+const addNewReservation = "INSERT INTO Reservation (Chambres_ID, NAS, Date_de_début, Date_de_fin) values ($1, $2, $3, $4)"
 
 //Requête 8 : verifie s'il est possible de reserver une chambre pour la date de début choisi
 const checkIfRoomAvailable = "SELECT * FROM Reservation WHERE Chambres_ID = $1 AND Date_de_début <= $2 AND Date_de_fin >= $2";
@@ -44,7 +44,7 @@ const addAdress = "INSERT INTO Adresse (Code_Postal, Rue, Num_de_rue, Ville) val
 
 //Requête 12 : Permet d'insérer un nouveau Client
 
-const addClient = "INSERT INTO Client (NAS, Date_Enreg) values ($1, $2)";
+const addClient = "INSERT INTO Client (NAS, Mot_de_passe, Date_Enreg) values ($1, $2, $3)";
 
 //Requête 13 : Permet de supprimer les informations sur un client en supprimant la personne à laquelle le client refère
 
