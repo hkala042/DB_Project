@@ -1,12 +1,13 @@
 Étapes pour bien démarrer notre projet
 
+
 1.Créer une nouvelle database dans Postgres
 2.Changer les criteres requis dans db.js pour connecter à cette database
 3.Ouvrir et executer les prochaines fichiers dans l'ordre suivant:
     -DDL.sql
     -Triggers.sql
     -DML.sql
-4.Pour démarrer le serveur, insérer `npm run dev`, le console imprimera Server is listenning on port 3000
+4.Pour démarrer le serveur, insérer `npm run dev` (télécharger Node,js si vous ne l'avez pas), le console imprimera Server is listenning on port 3000
 5.Pour tester les différents utilisations des clients et employers, svp créer un client/employer à travere
 les formes respectives dans l'appli web pour voire le bon fonctionnement de ses outils
 
