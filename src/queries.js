@@ -70,9 +70,13 @@ const updtPerson = "UPDATE Personne SET Nom = $2, Prenom = $3 WHERE NAS = $1";
 
 const delRes = "DELETE FROM Reservation WHERE Res_ID = $1";
 
+<<<<<<< Updated upstream
 //Requête 19 : Permet de modifier des reservations selon leurs Res_ID
 
 const updtRes = "UPDATE Reservation SET Chambre_ID = $2, Date_de_début = $3, Date_de_fin = $4 WHERE Res_ID = $1";
+=======
+const updtRes = "UPDATE Reservation SET Chambres_ID = $2, Date_de_début = $3, Date_de_fin = $4 WHERE Res_ID = $1";
+>>>>>>> Stashed changes
 
 //Requête 20 : Permet de trouver les infos d'une reservation selon leeurs Res_ID
 

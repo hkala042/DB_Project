@@ -320,17 +320,21 @@ router.post("/search_res/update/res", (req, res ) => {
 
     const res_id = req.body.res_id
     const chambre_id = req.body.chambre_id;
-    const debut_date = req.body.debut_date;
-    const fin_date = req.body.fin_date;
+    const debut_date = req.body.date_debut;
+    const fin_date = req.body.date_fin;
+
+    console.log(debut_date)
 
     pool.query(queries.checkIfRoomAvailable, [chambre_id, debut_date], (err, resu) =>{
         if (err) throw err
         if (resu.rows.length > 0) res.send( { res : 'NOT AVAILABLE'})
         else{
-    pool.query(queries.updtRes, [res_id, chambre_id, debut_date, fin_date], (err1, res1)=>{
-        if (err1) throw err1
-        else{ res.send({ res : true})}
-    })
+            pool.query(queries.updtRes, [res_id, chambre_id, debut_date, fin_date], (err1, res1) => {
+                if (err1) throw err1;
+                else {
+                    res.send({ res: true });
+                }
+            });
     }
     })
 });
